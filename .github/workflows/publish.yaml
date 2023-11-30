@@ -39,7 +39,6 @@ jobs:
       #     DOPPLER_TOKEN: ${{ secrets.TEST_DOPPLER_TOKEN }}
 
       - name: Lint Format
-        working-directory: packages/knox-api
         run: pnpm lint:format
 
       - name: Build Knox-Token-Library
@@ -47,7 +46,6 @@ jobs:
         run: pnpm build:production
 
       - name: Type Check
-        working-directory: packages/knox-api
         run: pnpm type-check
 
       # - name: Test
@@ -59,11 +57,9 @@ jobs:
       #   run: rm -R .env
 
       - name: Build
-        working-directory: packages/knox-api
         run: pnpm build:production
 
       - name: Publish to npm
-        working-directory: packages/knox-api
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.REDREDGROUP_ORGANIZATION_NPM_PUBLISH_KEY }}

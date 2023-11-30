@@ -3,8 +3,8 @@ import { InitConfig } from 'mixpanel';
 
 export interface MixpanelModuleOptions {
   isGlobal?: boolean;
-
-  mixpanelOptions?: MixpanelServiceOptions;
+  debug?: boolean;
+  mixpanelOptions?: MixpanelOptions;
 }
 
 export interface MixpanelServiceOptions {
@@ -12,7 +12,7 @@ export interface MixpanelServiceOptions {
 }
 
 export interface MixpanelOptions {
-  mixpanelToken: string;
+  projectToken: string;
   config?: Partial<InitConfig>;
 }
 

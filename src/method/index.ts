@@ -1,3 +1,4 @@
-export * from './event.method';
-export * from './group.method';
-export * from './people.method';
+export * from './event';
+export * from './group';
+export * from './people';
+export * from './alias';
