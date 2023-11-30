@@ -1,6 +1,7 @@
 {
   "name": "@redredgroup/nestjs-mixpanel",
   "description": "Mixpanel integration to a NestJS application",
+  "repository": "https://github.com/REDREDGROUP/nestjs-mixpanel.git",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "main": "dist/index.js",
