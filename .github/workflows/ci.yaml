@@ -28,29 +28,23 @@ jobs:
       #   uses: dopplerhq/cli-action@v1
 
       # - name: Export .env
-      #   working-directory: packages/knox-api
       #   run: doppler secrets download --no-file --format env-no-quotes > .env
       #   env:
       #     DOPPLER_TOKEN: ${{ secrets.TEST_DOPPLER_TOKEN }}
 
       - name: Lint Format
-        working-directory: packages/knox-api
         run: pnpm lint:format
 
       - name: Build Knox-Token-Library
-        working-directory: packages/knox-token-library
         run: pnpm build
 
       - name: Type Check
-        working-directory: packages/knox-api
         run: pnpm type-check
 
       # - name: Test
-      #   working-directory: packages/knox-api
       #   run: pnpm test:coverage
 
       - name: Build
-        working-directory: packages/knox-api
         run: pnpm build
 
       # - name: 'Report Coverage'

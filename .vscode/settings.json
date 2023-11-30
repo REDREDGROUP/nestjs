@@ -1,12 +1,3 @@
 {
-  "cSpell.words": [
-    "commitlint",
-    "jieey",
-    "nestjs",
-    "redredgroup",
-    "Seihoon",
-    "syncpack",
-    "syncpackrc",
-    "tsup"
-  ]
+  "cSpell.words": ["commitlint", "jieey", "nestjs", "redredgroup", "Seihoon", "syncpack", "syncpackrc", "tsup"]
 }
