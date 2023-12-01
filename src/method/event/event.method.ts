@@ -14,12 +14,20 @@ export class MixpanelEventMethods {
     }
   }
 
+  async trackMany(params: TrackParams[]) {
+    await Promise.all(params.map((item) => this.track(item)));
+  }
+
   trackBatch(params: TrackBatchParams) {
     if ('eventNames' in params) {
       this.mixpanel.track_batch(params.eventNames, params.options, params.callback);
     } else {
       this.mixpanel.track_batch(params.events, params.options, params.callback);
     }
+  }
+
+  async trackBatchMany(params: TrackBatchParams[]) {
+    await Promise.all(params.map((item) => this.trackBatch(item)));
   }
 
   import(params: ImportParams) {
@@ -31,11 +39,19 @@ export class MixpanelEventMethods {
     }
   }
 
+  async importMany(params: ImportParams[]) {
+    await Promise.all(params.map((item) => this.import(item)));
+  }
+
   importBatch(params: ImportBatchParams) {
     if ('eventNames' in params) {
       this.mixpanel.import_batch(params.eventNames, params.options, params.callback);
     } else {
       this.mixpanel.import_batch(params.events, params.callback);
     }
+  }
+
+  async importBatchMany(params: ImportBatchParams[]) {
+    await Promise.all(params.map((item) => this.importBatch(item)));
   }
 }

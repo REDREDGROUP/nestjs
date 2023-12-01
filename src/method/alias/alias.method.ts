@@ -7,4 +7,8 @@ export class MixpanelAliasMethods {
   alias(params: AliasParams) {
     this.mixpanel.alias(params.distinctId, params.alias, params.callback);
   }
+
+  async aliasMany(params: AliasParams[]) {
+    await Promise.all(params.map((item) => this.alias(item)));
+  }
 }
