@@ -15,16 +15,7 @@ export class MixpanelEventMethods {
   }
 
   async trackMany(params: TrackParams[]) {
-    await Promise.all(
-      params.map((item) => {
-        const { distinctId } = item;
-        if ('properties' in item) {
-          this.mixpanel.track(item.eventName, { ...item.properties, distinctId }, item.callback);
-        } else {
-          this.mixpanel.track(item.eventName, { distinctId }, item.callback);
-        }
-      }),
-    );
+    await Promise.all(params.map((item) => this.track(item)));
   }
 
   trackBatch(params: TrackBatchParams) {
@@ -36,15 +27,7 @@ export class MixpanelEventMethods {
   }
 
   async trackBatchMany(params: TrackBatchParams[]) {
-    await Promise.all(
-      params.map((item) => {
-        if ('eventNames' in item) {
-          this.mixpanel.track_batch(item.eventNames, item.options, item.callback);
-        } else {
-          this.mixpanel.track_batch(item.events, item.options, item.callback);
-        }
-      }),
-    );
+    await Promise.all(params.map((item) => this.trackBatch(item)));
   }
 
   import(params: ImportParams) {
@@ -57,16 +40,7 @@ export class MixpanelEventMethods {
   }
 
   async importMany(params: ImportParams[]) {
-    await Promise.all(
-      params.map((item) => {
-        const { distinctId } = item;
-        if ('properties' in item) {
-          this.mixpanel.import(item.eventName, item.time, { ...item.properties, distinctId }, item.callback);
-        } else {
-          this.mixpanel.import(item.eventName, item.time, { distinctId }, item.callback);
-        }
-      }),
-    );
+    await Promise.all(params.map((item) => this.import(item)));
   }
 
   importBatch(params: ImportBatchParams) {
@@ -78,14 +52,6 @@ export class MixpanelEventMethods {
   }
 
   async importBatchMany(params: ImportBatchParams[]) {
-    await Promise.all(
-      params.map((item) => {
-        if ('eventNames' in item) {
-          this.mixpanel.import_batch(item.eventNames, item.options, item.callback);
-        } else {
-          this.mixpanel.import_batch(item.events, item.callback);
-        }
-      }),
-    );
+    await Promise.all(params.map((item) => this.importBatch(item)));
   }
 }
