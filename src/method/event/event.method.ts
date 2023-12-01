@@ -14,12 +14,37 @@ export class MixpanelEventMethods {
     }
   }
 
+  async trackMany(params: TrackParams[]) {
+    await Promise.all(
+      params.map((item) => {
+        const { distinctId } = item;
+        if ('properties' in item) {
+          this.mixpanel.track(item.eventName, { ...item.properties, distinctId }, item.callback);
+        } else {
+          this.mixpanel.track(item.eventName, { distinctId }, item.callback);
+        }
+      }),
+    );
+  }
+
   trackBatch(params: TrackBatchParams) {
     if ('eventNames' in params) {
       this.mixpanel.track_batch(params.eventNames, params.options, params.callback);
     } else {
       this.mixpanel.track_batch(params.events, params.options, params.callback);
     }
+  }
+
+  async trackBatchMany(params: TrackBatchParams[]) {
+    await Promise.all(
+      params.map((item) => {
+        if ('eventNames' in item) {
+          this.mixpanel.track_batch(item.eventNames, item.options, item.callback);
+        } else {
+          this.mixpanel.track_batch(item.events, item.options, item.callback);
+        }
+      }),
+    );
   }
 
   import(params: ImportParams) {
@@ -31,11 +56,36 @@ export class MixpanelEventMethods {
     }
   }
 
+  async importMany(params: ImportParams[]) {
+    await Promise.all(
+      params.map((item) => {
+        const { distinctId } = item;
+        if ('properties' in item) {
+          this.mixpanel.import(item.eventName, item.time, { ...item.properties, distinctId }, item.callback);
+        } else {
+          this.mixpanel.import(item.eventName, item.time, { distinctId }, item.callback);
+        }
+      }),
+    );
+  }
+
   importBatch(params: ImportBatchParams) {
     if ('eventNames' in params) {
       this.mixpanel.import_batch(params.eventNames, params.options, params.callback);
     } else {
       this.mixpanel.import_batch(params.events, params.callback);
     }
+  }
+
+  async importBatchMany(params: ImportBatchParams[]) {
+    await Promise.all(
+      params.map((item) => {
+        if ('eventNames' in item) {
+          this.mixpanel.import_batch(item.eventNames, item.options, item.callback);
+        } else {
+          this.mixpanel.import_batch(item.events, item.callback);
+        }
+      }),
+    );
   }
 }
