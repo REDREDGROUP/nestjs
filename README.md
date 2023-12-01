@@ -149,7 +149,7 @@ export class AppService {
       },
     ];
 
-   await this.mixpanelService.event.trackMany(USERS);
+    await this.mixpanelService.event.trackMany(USERS);
 
     return 'ok';
   }
@@ -157,8 +157,6 @@ export class AppService {
 ```
 
 In common, all methods can inject data from an Array of values by appending Many after the role.
-
-
 
 ## Copyright
 
