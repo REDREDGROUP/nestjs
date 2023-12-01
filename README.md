@@ -119,10 +119,51 @@ export class AppService {
 }
 ```
 
+## Many Data Import
+
+Alternatively, you can process a lot of data at once with Array values. For example:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { MixpanelService, TrackParams } from '@redredgroup/nestjs-mixpanel';
+
+@Injectable()
+export class AppService {
+  constructor(private readonly mixpanelService: MixpanelService) {}
+
+  eventTrackMany(): string {
+    const USERS: TrackParams[] = [
+      {
+        eventName: 'CREATE_USER',
+        distinctId: 'USER_1',
+        properties: {
+          is_happy: true,
+        },
+      },
+      {
+        eventName: 'CREATE_USER',
+        distinctId: 'USER_2',
+        properties: {
+          is_happy: false,
+        },
+      },
+    ];
+
+   await this.mixpanelService.event.trackMany(USERS);
+
+    return 'ok';
+  }
+}
+```
+
+In common, all methods can inject data from an Array of values by appending Many after the role.
+
+
+
 ## Copyright
 
 © 2023 REDREDGROUP Software. All Right Reserved.
 
 ## License
 
-Apache
+Apache-2.0
