@@ -1,4 +1,4 @@
-name: CI
+name: Nest Mixpanel CI
 on:
   pull_request:
 
@@ -33,18 +33,22 @@ jobs:
       #     DOPPLER_TOKEN: ${{ secrets.TEST_DOPPLER_TOKEN }}
 
       - name: Lint Format
+        working-directory: packages/nestjs-mixpanel
         run: pnpm lint:format
 
       - name: Build Knox-Token-Library
+        working-directory: packages/nestjs-mixpanel
         run: pnpm build
 
       - name: Type Check
+        working-directory: packages/nestjs-mixpanel
         run: pnpm type-check
 
       # - name: Test
       #   run: pnpm test:coverage
 
       - name: Build
+        working-directory: packages/nestjs-mixpanel
         run: pnpm build
 
       # - name: 'Report Coverage'
