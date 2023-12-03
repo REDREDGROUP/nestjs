@@ -1,8 +1,8 @@
 # Nestjs Mixpanel [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
 
-[gh-actions]: https://github.com/REDREDGROUP/nestjs-mixpanel/actions
-[npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs-mixpanel
-[gh-actions-badge]: https://github.com/REDREDGROUP/nestjs-mixpanel/workflows/CI/badge.svg
+[gh-actions]: https://github.com/REDREDGROUP/nestjs/actions
+[npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs
+[gh-actions-badge]: https://github.com/REDREDGROUP/nestjs/workflows/CI/badge.svg
 [node-badge]: https://img.shields.io/node/v/@redredgroup%2Fnestjs-mixpanel.svg
 [npm-badge]: https://img.shields.io/npm/v/@redredgroup%2Fnestjs-mixpanel.svg
 
