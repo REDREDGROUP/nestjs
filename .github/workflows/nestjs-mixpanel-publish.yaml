@@ -1,4 +1,4 @@
-name: Publish
+name: Nestjs Mixpanel Publish
 
 on:
   push:

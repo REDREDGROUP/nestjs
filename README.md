@@ -1,167 +1,65 @@
-# Nestjs Mixpanel [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
+<h1 align="center"> Samsung Knox </h1>
 
-[gh-actions]: https://github.com/REDREDGROUP/nestjs-mixpanel/actions
-[npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs-mixpanel
-[gh-actions-badge]: https://github.com/REDREDGROUP/nestjs-mixpanel/workflows/CI/badge.svg
-[node-badge]: https://img.shields.io/node/v/@redredgroup%2Fnestjs-mixpanel.svg
-[npm-badge]: https://img.shields.io/npm/v/@redredgroup%2Fnestjs-mixpanel.svg
+## Documentation
 
-### Introduction
+For more information on how to use it, see here. : [Documentation](https://redredgroup.github.io/samsungknox)
 
-This package is a module that converts the asynchronous Mixpanel to Nestjs.
 
-## Installation
+## Introduction
 
-using npm
+Samsung Knox has been designed to conveniently utilize Knox API products in an SDK format.
 
-```bash
-npm install @redredgroup/nestjs-mixpanel
-```
+Despite the vast scope of the Knox API, the documentation is limited to static REST examples and usage instructions. To address this issue, a repository has been developed in Typescript, making it extremely convenient to use the APIs for Samsung Knox products.
 
-using yarn
 
-```bash
-yarn install @redredgroup/nestjs-mixpanel
-```
+## Packages
 
-using pnpm
+### [@redredgroup/samsungknox-token-library](https://www.npmjs.com/package/@redredgroup/samsungknox-token-library)
+<div align="center">
 
-```bash
-pnpm add @redredgroup/nestjs-mixpanel
-```
+[![npm version](https://img.shields.io/npm/v/@redredgroup%2Fsamsungknox-token-library.svg?style=flat-square)](https://www.npmjs.com/package/@redredgroup/samsungknox-token-library)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@redredgroup%2Fsamsungknox-token-library?style=flat-square)](https://bundlephobia.com/package/@redredgroup%2Fsamsungknox-token-library@latest)
+[![npm downloads](https://img.shields.io/npm/dm/@redredgroup%2Fsamsungknox-token-library.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@redredgroup%2Fsamsungknox-token-library)
 
-### Import module
+</div>
+This library is essential when using the Samsung Knox API as it pertains to JWT signing. It fully supports the existing packages and is even more stable. It includes basic functions for token and authentication key verification.
 
-```typescript
-import { Module } from '@nestjs/common';
-import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
+</br>
 
-@Module({
-  imports: [
-    MixpanelModule.forRoot({
-      mixpanelOptions: {
-        projectToken: 'YOUR_MIXPANEL_PROJECT_TOKEN',
-      },
-    }),
-  ],
-})
-export class AppModule {}
+<div align="center">
 
-//Or the forRootAsync module using @nestjs/Config
+For a detailed explanation, please click [here](https://github.com/REDREDGROUP/samsungknox/tree/develop/packages/knox-token-library).
 
-import { Module } from '@nestjs/common';
-import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+</div>
 
-@Module({
-  imports: [
-    MixpanelModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        mixpanelOptions: {
-          projectToken: configService.get('YOUR_MIXPANEL_PROJECT_TOKEN'),
-        },
-      }),
-      inject: [ConfigModule],
-    }),
-  ],
-})
-export class AppModule {}
-```
+### [@redredgroup/samsungknox-api](https://www.npmjs.com/package/@redredgroup/samsungknox-api)
+<div align="center">
 
-## Example
+[![npm version](https://img.shields.io/npm/v/@redredgroup%2Fsamsungknox-api.svg?style=flat-square)](https://www.npmjs.com/package/@redredgroup/samsungknox-api)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@redredgroup%2Fsamsungknox-api?style=flat-square)](https://bundlephobia.com/package/@redredgroup%2Fsamsungknox-api@latest)
+[![npm downloads](https://img.shields.io/npm/dm/@redredgroup%2Fsamsungknox-api.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@redredgroup%2Fsamsungknox-api)
 
-### Track Event
+</div>
+This library can be used when utilizing the APIs for Samsung Knox. It includes fundamental verification features and supports almost all types found in the Knox documentation to near perfection.
 
-```typescript
-import { Injectable } from '@nestjs/common';
-import { MixpanelService } from '@redredgroup/nestjs-mixpanel';
+</br>
 
-@Injectable()
-export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-  eventTrack(): string {
-    const USER_ID = 'USER1';
+<div align="center">
 
-    this.mixpanelService.event.track({
-      eventName: 'CREATE_USER',
-      distinctId: USER_ID,
-      properties: {
-        is_happy: true,
-      },
-    });
+For a detailed explanation, please click [here](https://github.com/REDREDGROUP/samsungknox/tree/develop/packages/knox-api).
 
-    return 'ok';
-  }
-}
-```
+</div>
 
-### People Increment
+## API Support
 
-```typescript
-import { Injectable } from '@nestjs/common';
-import { MixpanelService } from '@redredgroup/nestjs-mixpanel';
-
-@Injectable()
-export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-  peopleIncrementAdd(): string {
-    const USER_ID = 'USER1';
-
-    this.mixpanelService.people.set({
-      distinctId: USER_ID,
-      properties: {
-        happy_count: 1,
-      },
-    });
-
-    return 'ok';
-  }
-}
-```
-
-## Many Data Import
-
-Alternatively, you can process a lot of data at once with Array values. For example:
-
-```typescript
-import { Injectable } from '@nestjs/common';
-import { MixpanelService, TrackParams } from '@redredgroup/nestjs-mixpanel';
-
-@Injectable()
-export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-
-  eventTrackMany(): string {
-    const USERS: TrackParams[] = [
-      {
-        eventName: 'CREATE_USER',
-        distinctId: 'USER_1',
-        properties: {
-          is_happy: true,
-        },
-      },
-      {
-        eventName: 'CREATE_USER',
-        distinctId: 'USER_2',
-        properties: {
-          is_happy: false,
-        },
-      },
-    ];
-
-    await this.mixpanelService.event.trackMany(USERS);
-
-    return 'ok';
-  }
-}
-```
-
-In common, all methods can inject data from an Array of values by appending Many after the role.
+APIs that continue to be supported are being added and please refer to the corresponding README as soon as they are updated! :)
 
 ## Copyright
 
-© 2023 REDREDGROUP Software. All Right Reserved.
+© 2023 REDREDGROUP Web Service. All Right Reserved.
+
+**REDREDGROUP is Notify that it is not related to the SamsungKnox service.**
 
 ## License
 
-Apache-2.0
+Apache
