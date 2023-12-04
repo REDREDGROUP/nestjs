@@ -18,7 +18,7 @@ export class SmsVerify {
     config: SmsVerifyOptions;
     smsOptions: SmsOptions;
     requestConfigParameter?: SendRequestConfig;
-  }): Promise<DetailGroupMessageResponse> {
+  }): Promise<{ verificationCode: string; smsResult: DetailGroupMessageResponse }> {
     const generateVerificationCode = this.generateVerificationCode(config);
 
     const template = Handlebars.compile(config.verificationMessage);
@@ -36,7 +36,7 @@ export class SmsVerify {
       requestConfigParameter,
     );
 
-    return smsResult;
+    return { verificationCode: generateVerificationCode, smsResult };
   }
 
   private generateVerificationCode(config: SmsVerifyOptions): string {

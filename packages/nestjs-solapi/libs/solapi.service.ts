@@ -6,7 +6,7 @@ import { SmsVerify } from './custom';
 
 @Injectable()
 export class SolapiService extends SolapiMessageService implements OnModuleInit {
-  public customSolapi: {
+  public CustomSolapi: {
     SmsVerify: SmsVerify;
   };
 
@@ -19,7 +19,7 @@ export class SolapiService extends SolapiMessageService implements OnModuleInit 
     this.solapiKey = this.options.solapiOptions.apiKey;
     this.solapiSecret = this.options.solapiOptions.apiSecret;
 
-    this.customSolapi = {
+    this.CustomSolapi = {
       SmsVerify: new SmsVerify(this.solapiKey, this.solapiSecret),
     };
   }
