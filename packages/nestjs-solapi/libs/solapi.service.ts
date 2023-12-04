@@ -2,9 +2,14 @@ import type { SolapiServiceOptions } from './interfaces';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { SolapiMessageService } from 'solapi';
 import { SOLAPI_SERVICE_OPTIONS } from './solapi.constants';
+import { SmsVerify } from './custom';
 
 @Injectable()
 export class SolapiService extends SolapiMessageService implements OnModuleInit {
+  public customSolapi: {
+    SmsVerify: SmsVerify;
+  };
+
   private solapiKey: string | null;
   private solapiSecret: string | null;
 
@@ -13,6 +18,10 @@ export class SolapiService extends SolapiMessageService implements OnModuleInit 
 
     this.solapiKey = this.options.solapiOptions.apiKey;
     this.solapiSecret = this.options.solapiOptions.apiSecret;
+
+    this.customSolapi = {
+      SmsVerify: new SmsVerify(this.solapiKey, this.solapiSecret),
+    };
   }
 
   async onModuleInit() {
