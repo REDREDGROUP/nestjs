@@ -21,6 +21,7 @@ export class AppService {
     const sendVerifySmsResult =
       await this.solapiService.CustomSolapi.SmsVerify.send({
         config: {
+          consoleVerificationMode: true,
           verificationCodeLength: 10,
           verificationCodeType: 'ALPHABET_ONLY',
           verificationMessage: 'Verification Code is: {{VERIFICATION_CODE}}',
