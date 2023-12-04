@@ -114,19 +114,18 @@ import { SolapiService } from '@redredgroup/nestjs-solapi';
 export class AppService {
   constructor(private readonly solapiService: SolapiService) {}
   async sendingCustomVerifySms() {
-    const sendVerifySmsResult =
-      await this.solapiService.CustomSolapi.SmsVerify.send({
-        config: {
-          verificationCodeLength: 10, //Code Length
-          verificationCodeType: 'ALPHABET_ONLY', // 'NUMBER_ONLY' | 'ALPHABET_ONLY' | 'MIX'
-          verificationMessage: 'Verification Code is: {{VERIFICATION_CODE}}', // Inject wherever you want with the {{VERIFICATION_CODE}} format.
-        },
-        smsOptions: {
-          to: 'target Number',
-          from: 'Enter the registered calling number from your account',
-          type: 'SMS',
-        },
-      });
+    const sendVerifySmsResult = await this.solapiService.CustomSolapi.SmsVerify.send({
+      config: {
+        verificationCodeLength: 10, //Code Length
+        verificationCodeType: 'ALPHABET_ONLY', // 'NUMBER_ONLY' | 'ALPHABET_ONLY' | 'MIX'
+        verificationMessage: 'Verification Code is: {{VERIFICATION_CODE}}', // Inject wherever you want with the {{VERIFICATION_CODE}} format.
+      },
+      smsOptions: {
+        to: 'target Number',
+        from: 'Enter the registered calling number from your account',
+        type: 'SMS',
+      },
+    });
 
     console.log(sendVerifySmsResult.verificationCode);
     console.log(sendVerifySmsResult.smsResult);
