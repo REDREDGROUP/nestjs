@@ -2,6 +2,7 @@ import { DetailGroupMessageResponse, SendRequestConfig, SolapiMessageService } f
 import { SmsOptions, SmsVerifyOptions } from './sms-verify.type';
 import * as randomstring from 'randomstring';
 import Handlebars from 'handlebars';
+import { smsVerifySuccessResponseDummy } from './sms-verify.dummy';
 
 export class SmsVerify {
   private solapiMessageService: SolapiMessageService | null;
@@ -24,6 +25,10 @@ export class SmsVerify {
     const template = Handlebars.compile(config.verificationMessage);
 
     const verificationCodeInjectMessage = template({ VERIFICATION_CODE: generateVerificationCode });
+
+    if (config.consoleVerificationMode) {
+      return this.localVerificationMode({ text: verificationCodeInjectMessage, verificationCode: generateVerificationCode });
+    }
 
     const smsResult = await this.solapiMessageService.send(
       {
@@ -61,5 +66,21 @@ export class SmsVerify {
       default:
         throw new TypeError('There is no verification code type or you entered it incorrectly, please check the verificationCodeType.');
     }
+  }
+
+  private localVerificationMode({ text, verificationCode }: { text: string; verificationCode: string }) {
+    console.warn(`
+    Do not run this mode in production! This is a feature to reduce the cost of character testing in a development environment.
+    `);
+
+    console.log(`
+    ===============TEXT BODY=================
+    \n
+    ${text}
+    \n
+    =============TEXT BODY END===============
+    `);
+
+    return { verificationCode, smsResult: smsVerifySuccessResponseDummy };
   }
 }
