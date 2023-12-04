@@ -3,6 +3,7 @@ import { SmsOptions, SmsVerifyOptions } from './sms-verify.type';
 import * as randomstring from 'randomstring';
 import Handlebars from 'handlebars';
 import { smsVerifySuccessResponseDummy } from './sms-verify.dummy';
+import { CONSOLE_PRINT_VERIFICATION_TEXT_BODY, PRODUCTION_USE_WARNING } from './sms-verify.constants';
 
 export class SmsVerify {
   private solapiMessageService: SolapiMessageService | null;
@@ -51,6 +52,7 @@ export class SmsVerify {
       case 'ALPHABET_ONLY':
         return randomstring.generate({
           length: verificationCodeLength,
+          capitalization: 'uppercase',
           charset: 'alphabetic',
         });
       case 'NUMBER_ONLY':
@@ -61,6 +63,7 @@ export class SmsVerify {
       case 'MIX':
         return randomstring.generate({
           length: verificationCodeLength,
+          capitalization: 'uppercase',
           charset: 'alphanumeric',
         });
       default:
@@ -69,17 +72,8 @@ export class SmsVerify {
   }
 
   private localVerificationMode({ text, verificationCode }: { text: string; verificationCode: string }) {
-    console.warn(`
-    Do not run this mode in production! This is a feature to reduce the cost of character testing in a development environment.
-    `);
-
-    console.log(`
-    ===============TEXT BODY=================
-    \n
-    ${text}
-    \n
-    =============TEXT BODY END===============
-    `);
+    console.warn(PRODUCTION_USE_WARNING);
+    console.log(CONSOLE_PRINT_VERIFICATION_TEXT_BODY(text));
 
     return { verificationCode, smsResult: smsVerifySuccessResponseDummy };
   }
