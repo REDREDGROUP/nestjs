@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "commitlint",
+    "firestore",
     "jieey",
     "nestjs",
     "randomstring",
@@ -9,6 +10,7 @@
     "solapi",
     "syncpack",
     "syncpackrc",
-    "tsup"
+    "tsup",
+    "uids"
   ]
 }
