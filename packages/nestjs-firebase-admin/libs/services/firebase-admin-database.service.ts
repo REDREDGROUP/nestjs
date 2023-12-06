@@ -8,9 +8,6 @@ export class FirebaseDatabaseService implements admin.database.Database {
   constructor(public readonly _app: admin.app.App) {}
 
   get database() {
-    // if (!this._app) {
-    //   throw new Error('Firebase instance is undefined.');
-    // }
     return this._app.database();
   }
 

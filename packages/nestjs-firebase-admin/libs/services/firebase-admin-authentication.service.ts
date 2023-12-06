@@ -21,9 +21,6 @@ export class FirebaseAuthenticationService {
   }
 
   get auth() {
-    if (!this.app) {
-      throw new Error('Firebase instance is undefined.');
-    }
     return this.app.auth();
   }
 
