@@ -8,6 +8,7 @@
 [npm-download]: https://img.shields.io/npm/dm/@redredgroup%2Fnestjs-firebase-admin.svg
 
 ### Important
+
 Versions **1.0.2** and earlier are deprecated! for older versions, use the (README.md)[deprecated] It is recommended that you use the latest version of package whenever possible.
 
 [deprecated]: https://www.npmjs.com/package/@redredgroup/nestjs-firebase-admin/v/1.0.2
