@@ -1,10 +1,16 @@
-# Nestjs Firebase Admin [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
+# Nestjs Firebase Admin [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm] [![NPM version][npm-download]][npm]
 
 [gh-actions]: https://github.com/REDREDGROUP/nestjs/actions
 [npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs
 [gh-actions-badge]: https://github.com/REDREDGROUP/nestjs/workflows/CI/badge.svg
 [node-badge]: https://img.shields.io/node/v/@redredgroup%2Fnestjs-firebase-admin.svg
 [npm-badge]: https://img.shields.io/npm/v/@redredgroup%2Fnestjs-firebase-admin.svg
+[npm-download]: https://img.shields.io/npm/dm/@redredgroup%2Fnestjs-firebase-admin.svg
+
+### Important
+Versions **1.0.2** and earlier are deprecated! for older versions, use the (README.md)[deprecated] It is recommended that you use the latest version of package whenever possible.
+
+[deprecated]: https://www.npmjs.com/package/@redredgroup/nestjs-firebase-admin/v/1.0.2
 
 ## Support Function
 

@@ -6,9 +6,6 @@ export class FirebaseMessagingService {
   constructor(public readonly app: admin.app.App) {}
 
   get messaging() {
-    // if (!this.app) {
-    //   throw new Error('Firebase instance is undefined.');
-    // }
     return this.app.messaging();
   }
 

@@ -6,9 +6,6 @@ export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
   constructor(public readonly app: admin.app.App) {}
 
   get firestore() {
-    // if (!this.app) {
-    //   throw new Error('Firebase instance is undefined.');
-    // }
     return this.app.firestore();
   }
 
