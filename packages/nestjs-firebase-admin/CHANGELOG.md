@@ -1,5 +1,11 @@
 # @redredgroup/nestjs-firebase-admin
 
+## 1.1.1
+
+### Patch Changes
+
+- 3fbcba4: Removed unused code. Added backwards compatibility to README.md.
+
 ## 1.1.0
 
 ### Minor Changes
