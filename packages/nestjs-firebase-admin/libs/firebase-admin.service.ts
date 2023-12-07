@@ -23,7 +23,11 @@ export class FirebaseAdminService implements OnModuleInit {
   public Storage: FirebaseStorageService;
 
   constructor(@Inject(FIREBASE_ADMIN_SERVICE_OPTIONS) private readonly options: FirebaseAdminServiceOptions) {
-    this.app = admin.initializeApp(options.firebaseAdminOptions);
+    if (!admin.apps.length) {
+      this.app = admin.initializeApp(this.options.firebaseAdminOptions);
+    } else {
+      this.app = admin.app();
+    }
 
     this.Authentication = new FirebaseAuthenticationService(this.app);
     this.Database = new FirebaseDatabaseService(this.app);
