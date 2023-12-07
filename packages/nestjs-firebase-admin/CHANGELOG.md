@@ -1,5 +1,11 @@
 # @redredgroup/nestjs-firebase-admin
 
+## 1.1.2
+
+### Patch Changes
+
+- 87b7b89: Fixed the error The default Firebase app already exists. in the serverlesss project.
+
 ## 1.1.1
 
 ### Patch Changes
