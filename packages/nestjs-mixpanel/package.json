@@ -56,7 +56,6 @@
     "eslint": "8.52.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.1",
-    "husky": "8.0.3",
     "prettier": "3.0.3",
     "tsup": "6.7.0",
     "typescript": "5.0.4",
@@ -67,14 +66,5 @@
   },
   "engines": {
     "node": "18.16.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog",
-      "disableScopeLowerCase": false,
-      "disableSubjectLowerCase": false,
-      "maxHeaderWidth": 100,
-      "maxLineWidth": 100
-    }
   }
 }
