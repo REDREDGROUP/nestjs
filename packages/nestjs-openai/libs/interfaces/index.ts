@@ -1,1 +1,1 @@
-export * from "./openai-module-options.interface";
+export * from './openai-module-options.interface';

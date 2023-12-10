@@ -1,12 +1,8 @@
-import { DynamicModule, Module, Provider } from "@nestjs/common";
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 
-import {
-  OpenAIModuleAsyncOptions,
-  OpenAIModuleOptions,
-  OpenAIOptionsFactory,
-} from "./interfaces";
-import { OPENAI_SERVICE_OPTIONS } from "./openai.constants";
-import { OpenAIService } from "./openai.service";
+import { OpenAIModuleAsyncOptions, OpenAIModuleOptions, OpenAIOptionsFactory } from './interfaces';
+import { OPENAI_SERVICE_OPTIONS } from './openai.constants';
+import { OpenAIService } from './openai.service';
 
 @Module({
   providers: [OpenAIService],
@@ -35,9 +31,7 @@ export class OpenAIModule {
     };
   }
 
-  private static createAsyncProviders(
-    options: OpenAIModuleAsyncOptions,
-  ): Provider[] {
+  private static createAsyncProviders(options: OpenAIModuleAsyncOptions): Provider[] {
     if (options.useExisting || options.useFactory) {
       return this.createAsyncOptionsProvider(options);
     }
@@ -51,9 +45,7 @@ export class OpenAIModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(
-    options: OpenAIModuleAsyncOptions,
-  ): Provider[] {
+  private static createAsyncOptionsProvider(options: OpenAIModuleAsyncOptions): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -66,8 +58,7 @@ export class OpenAIModule {
     return [
       {
         provide: OPENAI_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: OpenAIOptionsFactory) =>
-          await optionsFactory.createOpenAIOptions(),
+        useFactory: async (optionsFactory: OpenAIOptionsFactory) => await optionsFactory.createOpenAIOptions(),
         inject: [options.useExisting || options.useClass],
       },
     ];
