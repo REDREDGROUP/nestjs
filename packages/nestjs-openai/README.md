@@ -33,14 +33,14 @@ pnpm add @redredgroup/nestjs-openai
 ### Import module
 
 ```typescript
-import { Module } from "@nestjs/common";
-import { OpenAIModule } from "@redredgroup/nestjs-openai";
+import { Module } from '@nestjs/common';
+import { OpenAIModule } from '@redredgroup/nestjs-openai';
 
 @Module({
   imports: [
     OpenAIModule.forRoot({
       options: {
-        apiKey: "OPENAI_API_KEY",
+        apiKey: 'OPENAI_API_KEY',
         //other openai Options
       },
     }),
@@ -50,9 +50,9 @@ export class AppModule {}
 
 //Or the forRootAsync module using @nestjs/Config
 
-import { Module } from "@nestjs/common";
-import { OpenAIModule } from "@redredgroup/nestjs-openai";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Module } from '@nestjs/common';
+import { OpenAIModule } from '@redredgroup/nestjs-openai';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -61,7 +61,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         options: {
-          apiKey: configService.get("OPENAI_API_KEY"),
+          apiKey: configService.get('OPENAI_API_KEY'),
           //other openai Options
         },
       }),
@@ -76,9 +76,9 @@ export class AppModule {}
 ###
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { OpenAIService } from "@redredgroup/nestjs-openai";
-import { ChatCompletion } from "openai/resources";
+import { Injectable } from '@nestjs/common';
+import { OpenAIService } from '@redredgroup/nestjs-openai';
+import { ChatCompletion } from 'openai/resources';
 
 @Injectable()
 export class AppService {
@@ -88,15 +88,15 @@ export class AppService {
     const chatCompletion = await this.openAiService.chat.completions.create({
       messages: [
         {
-          role: "system",
-          content: "You are a helpful assistant that generates nicknames.",
+          role: 'system',
+          content: 'You are a helpful assistant that generates nicknames.',
         },
         {
-          role: "user",
+          role: 'user',
           content: `Generate 4 nicknames similar to "${nickname}"`,
         },
       ],
-      model: "gpt-3.5-turbo",
+      model: 'gpt-3.5-turbo',
     });
 
     return chatCompletion;

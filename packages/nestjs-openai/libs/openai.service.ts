@@ -1,7 +1,7 @@
-import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
-import { OpenAI } from "openai";
-import { OPENAI_SERVICE_OPTIONS } from "./openai.constants";
-import type { OpenAIServiceOptions } from "./interfaces";
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { OpenAI } from 'openai';
+import { OPENAI_SERVICE_OPTIONS } from './openai.constants';
+import type { OpenAIServiceOptions } from './interfaces';
 
 @Injectable()
 export class OpenAIService extends OpenAI implements OnModuleInit {
@@ -11,7 +11,7 @@ export class OpenAIService extends OpenAI implements OnModuleInit {
 
   async onModuleInit() {
     if (!this.apiKey) {
-      throw new TypeError("openai token is not registered.");
+      throw new TypeError('openai token is not registered.');
     }
   }
 }

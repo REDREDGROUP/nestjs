@@ -1,4 +1,4 @@
-export * from "./interfaces";
+export * from './interfaces';
 
-export * from "./openai.module";
-export * from "./openai.service";
+export * from './openai.module';
+export * from './openai.service';
