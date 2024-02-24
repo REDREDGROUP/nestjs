@@ -1,5 +1,11 @@
 # @redredgroup/nestjs-solapi
 
+## 1.2.0
+
+### Minor Changes
+
+- upgrade solapi sdk to 5.3.0
+
 ## 1.1.1
 
 ### Patch Changes
