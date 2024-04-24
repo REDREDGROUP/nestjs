@@ -43,7 +43,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "openai": "4.20.1"
+    "openai": "4.38.3"
   },
   "devDependencies": {
     "@nestjs/common": "10.2.10",
