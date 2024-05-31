@@ -146,8 +146,8 @@ importers:
   packages/nestjs-openai:
     dependencies:
       openai:
-        specifier: 4.38.3
-        version: 4.38.3
+        specifier: 4.47.2
+        version: 4.47.2
     devDependencies:
       '@nestjs/common':
         specifier: 10.2.10
@@ -5257,8 +5257,8 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openai@4.38.3:
-    resolution: {integrity: sha512-mIL9WtrFNOanpx98mJ+X/wkoepcxdqqu0noWFoNQHl/yODQ47YM7NEYda7qp8JfjqpLFVxY9mQhshoS/Fqac0A==}
+  /openai@4.47.2:
+    resolution: {integrity: sha512-E3Wq9mYdDSLajmcJm9RO/lCegTKrQ7ilAkMbhob4UgGhTjHwIHI+mXNDNPl5+sGIUp2iVUkpoi772FjYa7JlqA==}
     hasBin: true
     dependencies:
       '@types/node': 18.19.1
