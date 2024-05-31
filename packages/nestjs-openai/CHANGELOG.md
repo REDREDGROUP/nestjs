@@ -1,5 +1,11 @@
 # @redredgroup/nestjs-openai
 
+## 1.0.2
+
+### Patch Changes
+
+- de101e0: openai core version up to 4.47.2
+
 ## 1.0.1
 
 ### Patch Changes
