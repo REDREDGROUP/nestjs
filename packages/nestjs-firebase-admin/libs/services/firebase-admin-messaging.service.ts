@@ -12,11 +12,11 @@ export class FirebaseMessagingService {
   send(message: admin.messaging.Message, dryRun?: boolean): Promise<string> {
     return this.messaging.send(message, dryRun);
   }
-  
+
   sendEach(messages: admin.messaging.Message[], dryRun?: boolean): Promise<admin.messaging.BatchResponse> {
     return this.messaging.sendEach(messages, dryRun);
   }
-  
+
   sendEachForMulticast(message: admin.messaging.MulticastMessage, dryRun?: boolean): Promise<admin.messaging.BatchResponse> {
     return this.messaging.sendEachForMulticast(message, dryRun);
   }
