@@ -1,7 +1,7 @@
 {
   "name": "@redredgroup/nestjs-solapi",
   "description": "SOLAPI integration to a NestJS application",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
