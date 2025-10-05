@@ -1,0 +1,33 @@
+name: NestJS Packages Publish
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Publish packages
+        run: pnpm package-publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.REDREDGROUP_ORGANIZATION_NPM_PUBLISH_KEY }}
