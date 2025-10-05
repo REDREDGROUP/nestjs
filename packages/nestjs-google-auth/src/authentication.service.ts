@@ -3,7 +3,7 @@ import { TokenPayload } from 'google-auth-library';
 import { google, Auth } from 'googleapis';
 
 import { GOOGLE_AUTH_SERVICE_OPTIONS } from './authentication.const';
-import { GoogleAuthModuleOptions } from './interfaces';
+import type { GoogleAuthModuleOptions } from './interfaces';
 
 @Injectable()
 export class GoogleAuthenticationService {
