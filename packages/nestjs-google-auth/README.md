@@ -1,47 +1,47 @@
-# Nestjs Mixpanel [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
+# Nestjs Google Auth [![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
 
 [gh-actions]: https://github.com/REDREDGROUP/nestjs/actions
-[npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs
+[npm]: https://www.npmjs.com/package/@redredgroup%2Fnestjs-google-auth
 [gh-actions-badge]: https://github.com/REDREDGROUP/nestjs/workflows/CI/badge.svg
-[node-badge]: https://img.shields.io/node/v/@redredgroup%2Fnestjs-mixpanel.svg
-[npm-badge]: https://img.shields.io/npm/v/@redredgroup%2Fnestjs-mixpanel.svg
+[node-badge]: https://img.shields.io/node/v/@redredgroup%2Fnestjs-google-auth.svg
+[npm-badge]: https://img.shields.io/npm/v/@redredgroup%2Fnestjs-google-auth.svg
 
 ### Introduction
 
-This package is a module that converts the asynchronous Mixpanel to Nestjs.
+This package is a module that integrates Google Authentication to NestJS application.
 
 ## Installation
 
 using npm
 
 ```bash
-npm install @redredgroup/nestjs-mixpanel
+npm install @redredgroup/nestjs-google-auth
 ```
 
 using yarn
 
 ```bash
-yarn install @redredgroup/nestjs-mixpanel
+yarn add @redredgroup/nestjs-google-auth
 ```
 
 using pnpm
 
 ```bash
-pnpm add @redredgroup/nestjs-mixpanel
+pnpm add @redredgroup/nestjs-google-auth
 ```
 
 ### Import module
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
+import { GoogleAuthModule } from '@redredgroup/nestjs-google-auth';
 
 @Module({
   imports: [
-    MixpanelModule.forRoot({
-      mixpanelOptions: {
-        projectToken: 'YOUR_MIXPANEL_PROJECT_TOKEN',
-      },
+    GoogleAuthModule.forRoot({
+      clientId: 'YOUR_GOOGLE_CLIENT_ID',
+      clientSecret: 'YOUR_GOOGLE_CLIENT_SECRET',
+      redirectUri: 'YOUR_REDIRECT_URI',
     }),
   ],
 })
@@ -50,18 +50,18 @@ export class AppModule {}
 //Or the forRootAsync module using @nestjs/Config
 
 import { Module } from '@nestjs/common';
-import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
+import { GoogleAuthModule } from '@redredgroup/nestjs-google-auth';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MixpanelModule.forRootAsync({
+    GoogleAuthModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
-        mixpanelOptions: {
-          projectToken: configService.get('YOUR_MIXPANEL_PROJECT_TOKEN'),
-        },
+        clientId: configService.get('GOOGLE_CLIENT_ID'),
+        clientSecret: configService.get('GOOGLE_CLIENT_SECRET'),
+        redirectUri: configService.get('GOOGLE_REDIRECT_URI'),
       }),
-      inject: [ConfigModule],
+      inject: [ConfigService],
     }),
   ],
 })
@@ -70,93 +70,32 @@ export class AppModule {}
 
 ## Example
 
-### Track Event
+### OAuth2 Client
 
 ```typescript
 import { Injectable } from '@nestjs/common';
-import { MixpanelService } from '@redredgroup/nestjs-mixpanel';
+import { GoogleAuthService } from '@redredgroup/nestjs-google-auth';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-  eventTrack(): string {
-    const USER_ID = 'USER1';
+  constructor(private readonly googleAuthService: GoogleAuthService) {}
 
-    this.mixpanelService.event.track({
-      eventName: 'CREATE_USER',
-      distinctId: USER_ID,
-      properties: {
-        is_happy: true,
-      },
+  async getAuthUrl(): string {
+    const authUrl = this.googleAuthService.generateAuthUrl({
+      scope: ['https://www.googleapis.com/auth/userinfo.email'],
     });
 
-    return 'ok';
+    return authUrl;
+  }
+
+  async getUserInfo(code: string) {
+    const { tokens } = await this.googleAuthService.getToken(code);
+    const userInfo = await this.googleAuthService.getUserInfo(tokens.access_token);
+
+    return userInfo;
   }
 }
 ```
-
-### People Increment
-
-```typescript
-import { Injectable } from '@nestjs/common';
-import { MixpanelService } from '@redredgroup/nestjs-mixpanel';
-
-@Injectable()
-export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-  peopleIncrementAdd(): string {
-    const USER_ID = 'USER1';
-
-    this.mixpanelService.people.set({
-      distinctId: USER_ID,
-      properties: {
-        happy_count: 1,
-      },
-    });
-
-    return 'ok';
-  }
-}
-```
-
-## Many Data Import
-
-Alternatively, you can process a lot of data at once with Array values. For example:
-
-```typescript
-import { Injectable } from '@nestjs/common';
-import { MixpanelService, TrackParams } from '@redredgroup/nestjs-mixpanel';
-
-@Injectable()
-export class AppService {
-  constructor(private readonly mixpanelService: MixpanelService) {}
-
-  eventTrackMany(): string {
-    const USERS: TrackParams[] = [
-      {
-        eventName: 'CREATE_USER',
-        distinctId: 'USER_1',
-        properties: {
-          is_happy: true,
-        },
-      },
-      {
-        eventName: 'CREATE_USER',
-        distinctId: 'USER_2',
-        properties: {
-          is_happy: false,
-        },
-      },
-    ];
-
-    await this.mixpanelService.event.trackMany(USERS);
-
-    return 'ok';
-  }
-}
-```
-
-In common, all methods can inject data from an Array of values by appending Many after the role.
 
 ## Copyright
 
