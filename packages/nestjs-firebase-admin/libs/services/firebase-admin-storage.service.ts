@@ -1,4 +1,3 @@
-import { Bucket } from '@google-cloud/storage';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 
@@ -10,7 +9,7 @@ export class FirebaseStorageService {
     return this.app.storage();
   }
 
-  bucket(name?: string): Bucket {
+  bucket(name?: string): ReturnType<admin.storage.Storage['bucket']> {
     return this.storage.bucket(name);
   }
 }

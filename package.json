@@ -22,7 +22,8 @@
   ],
   "scripts": {
     "build": "tsup-node",
-    "build:production": "NODE_ENV=production tsup-node",
+    "package-publish": "pnpm build:production && changeset publish",
+    "build:production": "turbo run build:production",
     "build:watch": "tsup-node --watch",
     "format": "turbo run format",
     "lint": "eslint  \"**/*.ts\" --fix",
@@ -36,6 +37,8 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.10.7",
     "@changesets/cli": "2.26.2",
     "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "18.1.0",
@@ -48,7 +51,7 @@
     "turbo": "1.10.14"
   },
   "engines": {
-    "node": "18.16.1"
+    "node": "22.11.0"
   },
   "config": {
     "commitizen": {

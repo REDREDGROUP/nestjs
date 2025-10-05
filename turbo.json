@@ -9,6 +9,7 @@
     "format": {
       "cache": false
     },
+    "build:production": {},
     "lint": {},
     "lint:fix": {
       "cache": false

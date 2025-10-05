@@ -7553,7 +7553,7 @@ packages:
     resolution: { directory: .., type: directory }
     id: file:..
     name: '@redredgroup/nestjs-openai'
-    engines: { node: 18.16.1 }
+    engines: { node: 22.11.0 }
     peerDependencies:
       '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
     dependencies:

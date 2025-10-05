@@ -160,7 +160,7 @@ In common, all methods can inject data from an Array of values by appending Many
 
 ## Copyright
 
-© 2023 REDREDGROUP Software. All Right Reserved.
+© 2025 REDREDGROUP Software. All Right Reserved.
 
 ## License
 
