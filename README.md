@@ -1,6 +1,6 @@
 ## Copyright
 
-© 2023 REDREDGROUP Software. All Right Reserved.
+© 2025 REDREDGROUP Software. All Right Reserved.
 
 ## License
 

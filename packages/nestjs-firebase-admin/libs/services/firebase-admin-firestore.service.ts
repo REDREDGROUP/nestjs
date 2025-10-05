@@ -9,6 +9,10 @@ export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
     return this.app.firestore();
   }
 
+  get databaseId(): string {
+    return this.firestore.databaseId;
+  }
+
   settings(settings: FirebaseFirestore.Settings): void {
     return this.firestore.settings(settings);
   }
