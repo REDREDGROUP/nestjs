@@ -1,5 +1,13 @@
 # @redredgroup/nestjs-firebase-admin
 
+## 1.2.2
+
+### Patch Changes
+
+- Re-export `firebase-admin/app` runtime helpers such as `cert` from the package public API.
+
+  This allows consumers to import both Firebase Admin types and credential helpers directly from `@redredgroup/nestjs-firebase-admin`.
+
 ## 1.2.1
 
 ### Patch Changes
