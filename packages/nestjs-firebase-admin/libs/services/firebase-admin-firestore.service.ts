@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import type * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
@@ -30,7 +30,10 @@ export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
   }
 
   getAll(
-    ...documentRefsOrReadOptions: (FirebaseFirestore.DocumentReference | FirebaseFirestore.ReadOptions)[]
+    ...documentRefsOrReadOptions: (
+      | FirebaseFirestore.DocumentReference
+      | FirebaseFirestore.ReadOptions
+    )[]
   ): Promise<FirebaseFirestore.DocumentSnapshot[]> {
     return this.firestore.getAll(...documentRefsOrReadOptions);
   }
@@ -54,7 +57,9 @@ export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
     return this.firestore.batch();
   }
 
-  bulkWriter(options?: FirebaseFirestore.BulkWriterOptions): FirebaseFirestore.BulkWriter {
+  bulkWriter(
+    options?: FirebaseFirestore.BulkWriterOptions,
+  ): FirebaseFirestore.BulkWriter {
     return this.firestore.bulkWriter(options);
   }
 
@@ -63,7 +68,9 @@ export class FirebaseFirestoreService implements FirebaseFirestore.Firestore {
   }
 
   recursiveDelete(
-    ref: FirebaseFirestore.CollectionReference<unknown> | FirebaseFirestore.DocumentReference<unknown>,
+    ref:
+      | FirebaseFirestore.CollectionReference<unknown>
+      | FirebaseFirestore.DocumentReference<unknown>,
     bulkWriter?: FirebaseFirestore.BulkWriter,
   ): Promise<void> {
     return this.firestore.recursiveDelete(ref, bulkWriter);

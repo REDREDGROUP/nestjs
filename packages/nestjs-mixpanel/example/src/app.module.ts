@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MixpanelModule } from '@redredgroup/nestjs-mixpanel';
 
 @Module({
   imports: [

@@ -1,4 +1,4 @@
-import { ModuleMetadata, Type } from '@nestjs/common';
+import type { ModuleMetadata, Type } from '@nestjs/common';
 
 export interface SolapiModuleOptions {
   isGlobal?: boolean;
@@ -19,10 +19,13 @@ export interface SolapiOptionsFactory {
   createSolapiOptions(): Promise<SolapiServiceOptions> | SolapiServiceOptions;
 }
 
-export interface SolapiModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface SolapiModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   isGlobal?: boolean;
   useExisting?: Type<SolapiOptionsFactory>;
   useClass?: Type<SolapiOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<SolapiServiceOptions> | SolapiServiceOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<SolapiServiceOptions> | SolapiServiceOptions;
   inject?: any[];
 }

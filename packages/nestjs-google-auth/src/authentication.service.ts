@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TokenPayload } from 'google-auth-library';
-import { google, Auth } from 'googleapis';
+import type { TokenPayload } from 'google-auth-library';
+import { type Auth, google } from 'googleapis';
 
 import { GOOGLE_AUTH_SERVICE_OPTIONS } from './authentication.const';
 import type { GoogleAuthModuleOptions } from './interfaces';
@@ -14,7 +14,9 @@ export class GoogleAuthenticationService {
     private readonly options: GoogleAuthModuleOptions,
   ) {
     if (!this.options) {
-      throw new TypeError('You must provide Google Auth options to initialize GoogleAuthModule.');
+      throw new TypeError(
+        'You must provide Google Auth options to initialize GoogleAuthModule.',
+      );
     }
 
     const clientId = this.options.clientId;
@@ -28,7 +30,9 @@ export class GoogleAuthenticationService {
     payload?: TokenPayload | undefined;
   }> {
     try {
-      const loginTicket = await this.googleAuth.verifyIdToken({ idToken: id_token });
+      const loginTicket = await this.googleAuth.verifyIdToken({
+        idToken: id_token,
+      });
       const userId: string | null = loginTicket.getUserId();
       const payload: TokenPayload | undefined = loginTicket.getPayload();
       return {
@@ -37,7 +41,8 @@ export class GoogleAuthenticationService {
         payload,
       };
     } catch (error) {
-      throw new Error(`Failed to verify Google ID token: ${error.message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to verify Google ID token: ${message}`);
     }
   }
 }

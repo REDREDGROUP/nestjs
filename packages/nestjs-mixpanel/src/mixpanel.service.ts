@@ -1,19 +1,27 @@
+import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
+import { init, type Mixpanel } from 'mixpanel';
 import type { MixpanelServiceOptions } from './interfaces';
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import { Mixpanel, init } from 'mixpanel';
+import {
+  MixpanelAliasMethods,
+  MixpanelEventMethods,
+  MixpanelGroupMethods,
+  MixpanelPeopleMethods,
+} from './method';
 import { MIXPANEL_SERVICE_OPTIONS } from './mixpanel.constants';
-import { MixpanelAliasMethods, MixpanelEventMethods, MixpanelGroupMethods, MixpanelPeopleMethods } from './method';
 
 @Injectable()
 export class MixpanelService implements OnModuleInit {
   private mixpanel: Mixpanel | null = null;
 
-  public alias: MixpanelAliasMethods;
-  public event: MixpanelEventMethods;
-  public people: MixpanelPeopleMethods;
-  public groups: MixpanelGroupMethods;
+  public alias!: MixpanelAliasMethods;
+  public event!: MixpanelEventMethods;
+  public people!: MixpanelPeopleMethods;
+  public groups!: MixpanelGroupMethods;
 
-  constructor(@Inject(MIXPANEL_SERVICE_OPTIONS) private readonly options: MixpanelServiceOptions) {
+  constructor(
+    @Inject(MIXPANEL_SERVICE_OPTIONS)
+    private readonly options: MixpanelServiceOptions,
+  ) {
     const token = this.options.mixpanelOptions.projectToken;
     const config = this.options.mixpanelOptions.config;
 

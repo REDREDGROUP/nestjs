@@ -40,7 +40,7 @@ const config = {
     {
       dependencies: ["@types/node"],
       packages: ["**"],
-      pinVersion: "20.9.0",
+      pinVersion: "25.8.0",
     },
   ],
 };

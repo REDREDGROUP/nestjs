@@ -1,8 +1,12 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { type DynamicModule, Module, type Provider } from '@nestjs/common';
 
 import { GOOGLE_AUTH_SERVICE_OPTIONS } from './authentication.const';
 import { GoogleAuthenticationService } from './authentication.service';
-import { GoogleAuthModuleAsyncOptions, GoogleAuthModuleOptions, GoogleAuthOptionsFactory } from './interfaces';
+import type {
+  GoogleAuthModuleAsyncOptions,
+  GoogleAuthModuleOptions,
+  GoogleAuthOptionsFactory,
+} from './interfaces';
 
 @Module({
   providers: [GoogleAuthenticationService],
@@ -27,17 +31,23 @@ export class GoogleAuthModule {
       global: options.isGlobal,
       module: GoogleAuthModule,
       imports: options.imports || [],
-      providers: this.createAsyncProviders(options),
+      providers: GoogleAuthModule.createAsyncProviders(options),
     };
   }
 
-  private static createAsyncProviders(options: GoogleAuthModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(
+    options: GoogleAuthModuleAsyncOptions,
+  ): Provider[] {
     if (options.useExisting || options.useFactory) {
-      return this.createAsyncOptionsProvider(options);
+      return GoogleAuthModule.createAsyncOptionsProvider(options);
+    }
+
+    if (!options.useClass) {
+      return GoogleAuthModule.createAsyncOptionsProvider(options);
     }
 
     return [
-      ...this.createAsyncOptionsProvider(options),
+      ...GoogleAuthModule.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
         useClass: options.useClass,
@@ -45,7 +55,9 @@ export class GoogleAuthModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: GoogleAuthModuleAsyncOptions): Provider[] {
+  private static createAsyncOptionsProvider(
+    options: GoogleAuthModuleAsyncOptions,
+  ): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -55,11 +67,19 @@ export class GoogleAuthModule {
         },
       ];
     }
+
+    const injectToken = options.useExisting ?? options.useClass;
+
+    if (!injectToken) {
+      return [];
+    }
+
     return [
       {
         provide: GOOGLE_AUTH_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: GoogleAuthOptionsFactory) => await optionsFactory.createGoogleAuthOptions(),
-        inject: [options.useExisting || options.useClass],
+        useFactory: async (optionsFactory: GoogleAuthOptionsFactory) =>
+          await optionsFactory.createGoogleAuthOptions(),
+        inject: [injectToken],
       },
     ];
   }

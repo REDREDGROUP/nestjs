@@ -1,7 +1,7 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
 import { OpenAI } from 'openai';
-import { OPENAI_SERVICE_OPTIONS } from './openai.constants';
 import type { OpenAIServiceOptions } from './interfaces';
+import { OPENAI_SERVICE_OPTIONS } from './openai.constants';
 
 @Injectable()
 export class OpenAIService extends OpenAI implements OnModuleInit {

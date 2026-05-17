@@ -1,3 +1,7 @@
-import mixpanel from 'mixpanel';
+import type mixpanel from 'mixpanel';
 
-export type AliasParams = { distinctId: string; alias: string; callback?: mixpanel.Callback };
+export type AliasParams = {
+  distinctId: string;
+  alias: string;
+  callback?: mixpanel.Callback;
+};

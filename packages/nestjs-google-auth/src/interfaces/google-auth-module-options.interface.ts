@@ -1,4 +1,4 @@
-import { ModuleMetadata, Type } from '@nestjs/common';
+import type { ModuleMetadata, Type } from '@nestjs/common';
 
 export interface GoogleAuthModuleOptions {
   isGlobal?: boolean;
@@ -7,13 +7,18 @@ export interface GoogleAuthModuleOptions {
 }
 
 export interface GoogleAuthOptionsFactory {
-  createGoogleAuthOptions(): Promise<GoogleAuthModuleOptions> | GoogleAuthModuleOptions;
+  createGoogleAuthOptions():
+    | Promise<GoogleAuthModuleOptions>
+    | GoogleAuthModuleOptions;
 }
 
-export interface GoogleAuthModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface GoogleAuthModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   isGlobal?: boolean;
   useExisting?: Type<GoogleAuthOptionsFactory>;
   useClass?: Type<GoogleAuthOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<GoogleAuthModuleOptions> | GoogleAuthModuleOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<GoogleAuthModuleOptions> | GoogleAuthModuleOptions;
   inject?: any[];
 }

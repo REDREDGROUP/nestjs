@@ -1,6 +1,10 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { type DynamicModule, Module, type Provider } from '@nestjs/common';
 
-import { SolapiModuleAsyncOptions, SolapiModuleOptions, SolapiOptionsFactory } from './interfaces';
+import type {
+  SolapiModuleAsyncOptions,
+  SolapiModuleOptions,
+  SolapiOptionsFactory,
+} from './interfaces';
 import { SOLAPI_SERVICE_OPTIONS } from './solapi.constants';
 import { SolapiService } from './solapi.service';
 
@@ -27,17 +31,23 @@ export class SolapiModule {
       global: options.isGlobal,
       module: SolapiModule,
       imports: options.imports || [],
-      providers: this.createAsyncProviders(options),
+      providers: SolapiModule.createAsyncProviders(options),
     };
   }
 
-  private static createAsyncProviders(options: SolapiModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(
+    options: SolapiModuleAsyncOptions,
+  ): Provider[] {
     if (options.useExisting || options.useFactory) {
-      return this.createAsyncOptionsProvider(options);
+      return SolapiModule.createAsyncOptionsProvider(options);
+    }
+
+    if (!options.useClass) {
+      return SolapiModule.createAsyncOptionsProvider(options);
     }
 
     return [
-      ...this.createAsyncOptionsProvider(options),
+      ...SolapiModule.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
         useClass: options.useClass,
@@ -45,7 +55,9 @@ export class SolapiModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: SolapiModuleAsyncOptions): Provider[] {
+  private static createAsyncOptionsProvider(
+    options: SolapiModuleAsyncOptions,
+  ): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -55,11 +67,19 @@ export class SolapiModule {
         },
       ];
     }
+
+    const injectToken = options.useExisting ?? options.useClass;
+
+    if (!injectToken) {
+      return [];
+    }
+
     return [
       {
         provide: SOLAPI_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: SolapiOptionsFactory) => await optionsFactory.createSolapiOptions(),
-        inject: [options.useExisting || options.useClass],
+        useFactory: async (optionsFactory: SolapiOptionsFactory) =>
+          await optionsFactory.createSolapiOptions(),
+        inject: [injectToken],
       },
     ];
   }

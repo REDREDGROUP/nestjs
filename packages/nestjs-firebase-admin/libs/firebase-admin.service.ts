@@ -1,5 +1,7 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { FIREBASE_ADMIN_SERVICE_OPTIONS } from './firebase-admin.constants';
+import type { FirebaseAdminServiceOptions } from './interfaces';
 import {
   FirebaseAuthenticationService,
   FirebaseDatabaseService,
@@ -8,8 +10,6 @@ import {
   FirebaseRemoteConfigService,
   FirebaseStorageService,
 } from './services';
-import { FIREBASE_ADMIN_SERVICE_OPTIONS } from './firebase-admin.constants';
-import type { FirebaseAdminServiceOptions } from './interfaces';
 
 @Injectable()
 export class FirebaseAdminService implements OnModuleInit {
@@ -22,7 +22,10 @@ export class FirebaseAdminService implements OnModuleInit {
   public RemoteConfig: FirebaseRemoteConfigService;
   public Storage: FirebaseStorageService;
 
-  constructor(@Inject(FIREBASE_ADMIN_SERVICE_OPTIONS) private readonly options: FirebaseAdminServiceOptions) {
+  constructor(
+    @Inject(FIREBASE_ADMIN_SERVICE_OPTIONS)
+    private readonly options: FirebaseAdminServiceOptions,
+  ) {
     if (!admin.apps.length) {
       this.app = admin.initializeApp(this.options.firebaseAdminOptions);
     } else {

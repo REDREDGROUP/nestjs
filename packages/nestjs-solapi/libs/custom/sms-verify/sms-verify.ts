@@ -1,12 +1,19 @@
-import { DetailGroupMessageResponse, SendRequestConfig, SolapiMessageService } from 'solapi';
-import { SmsOptions, SmsVerifyOptions } from './sms-verify.type';
-import * as randomstring from 'randomstring';
 import Handlebars from 'handlebars';
+import * as randomstring from 'randomstring';
+import {
+  type DetailGroupMessageResponse,
+  type SendRequestConfigSchema,
+  SolapiMessageService,
+} from 'solapi';
+import {
+  CONSOLE_PRINT_VERIFICATION_TEXT_BODY,
+  PRODUCTION_USE_WARNING,
+} from './sms-verify.constants';
 import { smsVerifySuccessResponseDummy } from './sms-verify.dummy';
-import { CONSOLE_PRINT_VERIFICATION_TEXT_BODY, PRODUCTION_USE_WARNING } from './sms-verify.constants';
+import type { SmsOptions, SmsVerifyOptions } from './sms-verify.type';
 
 export class SmsVerify {
-  private solapiMessageService: SolapiMessageService | null;
+  private solapiMessageService: SolapiMessageService;
 
   constructor(apiKey: string, apiSecret: string) {
     this.solapiMessageService = new SolapiMessageService(apiKey, apiSecret);
@@ -19,16 +26,24 @@ export class SmsVerify {
   }: {
     config: SmsVerifyOptions;
     smsOptions: SmsOptions;
-    requestConfigParameter?: SendRequestConfig;
-  }): Promise<{ verificationCode: string; smsResult: DetailGroupMessageResponse }> {
+    requestConfigParameter?: SendRequestConfigSchema;
+  }): Promise<{
+    verificationCode: string;
+    smsResult: DetailGroupMessageResponse;
+  }> {
     const generateVerificationCode = this.generateVerificationCode(config);
 
     const template = Handlebars.compile(config.verificationMessage);
 
-    const verificationCodeInjectMessage = template({ VERIFICATION_CODE: generateVerificationCode });
+    const verificationCodeInjectMessage = template({
+      VERIFICATION_CODE: generateVerificationCode,
+    });
 
     if (config.consoleVerificationMode) {
-      return this.localVerificationMode({ text: verificationCodeInjectMessage, verificationCode: generateVerificationCode });
+      return this.localVerificationMode({
+        text: verificationCodeInjectMessage,
+        verificationCode: generateVerificationCode,
+      });
     }
 
     const smsResult = await this.solapiMessageService.send(
@@ -67,11 +82,19 @@ export class SmsVerify {
           charset: 'alphanumeric',
         });
       default:
-        throw new TypeError('There is no verification code type or you entered it incorrectly, please check the verificationCodeType.');
+        throw new TypeError(
+          'There is no verification code type or you entered it incorrectly, please check the verificationCodeType.',
+        );
     }
   }
 
-  private localVerificationMode({ text, verificationCode }: { text: string; verificationCode: string }) {
+  private localVerificationMode({
+    text,
+    verificationCode,
+  }: {
+    text: string;
+    verificationCode: string;
+  }) {
     console.warn(PRODUCTION_USE_WARNING);
     console.log(CONSOLE_PRINT_VERIFICATION_TEXT_BODY(text));
 

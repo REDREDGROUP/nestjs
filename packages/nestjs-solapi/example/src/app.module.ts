@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { SolapiModule } from '@redredgroup/nestjs-solapi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SolapiModule } from '@redredgroup/nestjs-solapi';
 
 @Module({
   imports: [

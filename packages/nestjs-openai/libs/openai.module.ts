@@ -1,6 +1,10 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { type DynamicModule, Module, type Provider } from '@nestjs/common';
 
-import { OpenAIModuleAsyncOptions, OpenAIModuleOptions, OpenAIOptionsFactory } from './interfaces';
+import type {
+  OpenAIModuleAsyncOptions,
+  OpenAIModuleOptions,
+  OpenAIOptionsFactory,
+} from './interfaces';
 import { OPENAI_SERVICE_OPTIONS } from './openai.constants';
 import { OpenAIService } from './openai.service';
 
@@ -27,17 +31,23 @@ export class OpenAIModule {
       global: options.isGlobal,
       module: OpenAIModule,
       imports: options.imports || [],
-      providers: this.createAsyncProviders(options),
+      providers: OpenAIModule.createAsyncProviders(options),
     };
   }
 
-  private static createAsyncProviders(options: OpenAIModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(
+    options: OpenAIModuleAsyncOptions,
+  ): Provider[] {
     if (options.useExisting || options.useFactory) {
-      return this.createAsyncOptionsProvider(options);
+      return OpenAIModule.createAsyncOptionsProvider(options);
+    }
+
+    if (!options.useClass) {
+      return OpenAIModule.createAsyncOptionsProvider(options);
     }
 
     return [
-      ...this.createAsyncOptionsProvider(options),
+      ...OpenAIModule.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
         useClass: options.useClass,
@@ -45,7 +55,9 @@ export class OpenAIModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: OpenAIModuleAsyncOptions): Provider[] {
+  private static createAsyncOptionsProvider(
+    options: OpenAIModuleAsyncOptions,
+  ): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -55,11 +67,19 @@ export class OpenAIModule {
         },
       ];
     }
+
+    const injectToken = options.useExisting ?? options.useClass;
+
+    if (!injectToken) {
+      return [];
+    }
+
     return [
       {
         provide: OPENAI_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: OpenAIOptionsFactory) => await optionsFactory.createOpenAIOptions(),
-        inject: [options.useExisting || options.useClass],
+        useFactory: async (optionsFactory: OpenAIOptionsFactory) =>
+          await optionsFactory.createOpenAIOptions(),
+        inject: [injectToken],
       },
     ];
   }
