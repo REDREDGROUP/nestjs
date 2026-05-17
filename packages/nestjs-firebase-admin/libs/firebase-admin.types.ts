@@ -1,5 +1,10 @@
 export type * as FirebaseAdminApp from 'firebase-admin/app';
-export type { App, AppOptions } from 'firebase-admin/app';
+export type {
+  App,
+  AppOptions,
+  Credential,
+  ServiceAccount,
+} from 'firebase-admin/app';
 export type * as FirebaseAdminAuth from 'firebase-admin/auth';
 export type {
   ActionCodeSettings,
