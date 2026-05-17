@@ -1,5 +1,6 @@
 {
   "name": "@redredgroup/nestjs",
+  "version": "1.0.0",
   "private": true,
   "description": "Mixpanel integration to a NestJS application",
   "license": "Apache-2.0",
