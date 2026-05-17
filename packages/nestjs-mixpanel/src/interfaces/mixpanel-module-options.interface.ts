@@ -1,5 +1,5 @@
-import { ModuleMetadata, Type } from '@nestjs/common';
-import { InitConfig } from 'mixpanel';
+import type { ModuleMetadata, Type } from '@nestjs/common';
+import type { InitConfig } from 'mixpanel';
 
 export interface MixpanelModuleOptions {
   isGlobal?: boolean;
@@ -17,13 +17,18 @@ export interface MixpanelOptions {
 }
 
 export interface MixpanelOptionsFactory {
-  createMixpanelOptions(): Promise<MixpanelServiceOptions> | MixpanelServiceOptions;
+  createMixpanelOptions():
+    | Promise<MixpanelServiceOptions>
+    | MixpanelServiceOptions;
 }
 
-export interface MixpanelModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface MixpanelModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   isGlobal?: boolean;
   useExisting?: Type<MixpanelOptionsFactory>;
   useClass?: Type<MixpanelOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<MixpanelServiceOptions> | MixpanelServiceOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<MixpanelServiceOptions> | MixpanelServiceOptions;
   inject?: any[];
 }

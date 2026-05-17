@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FirebaseAdminService } from '@redredgroup/nestjs-firebase-admin';
+import type { FirebaseAdminService } from '@redredgroup/nestjs-firebase-admin';
 
 @Injectable()
 export class AppService {

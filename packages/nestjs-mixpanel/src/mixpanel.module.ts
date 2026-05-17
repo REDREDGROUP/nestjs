@@ -1,7 +1,11 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { type DynamicModule, Module, type Provider } from '@nestjs/common';
+import type {
+  MixpanelModuleAsyncOptions,
+  MixpanelModuleOptions,
+  MixpanelOptionsFactory,
+} from './interfaces';
 import { MIXPANEL_SERVICE_OPTIONS } from './mixpanel.constants';
 import { MixpanelService } from './mixpanel.service';
-import { MixpanelModuleAsyncOptions, MixpanelModuleOptions, MixpanelOptionsFactory } from './interfaces';
 
 @Module({
   providers: [MixpanelService],
@@ -26,17 +30,23 @@ export class MixpanelModule {
       global: options.isGlobal,
       module: MixpanelModule,
       imports: options.imports || [],
-      providers: this.createAsyncProviders(options),
+      providers: MixpanelModule.createAsyncProviders(options),
     };
   }
 
-  private static createAsyncProviders(options: MixpanelModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(
+    options: MixpanelModuleAsyncOptions,
+  ): Provider[] {
     if (options.useExisting || options.useFactory) {
-      return this.createAsyncOptionsProvider(options);
+      return MixpanelModule.createAsyncOptionsProvider(options);
+    }
+
+    if (!options.useClass) {
+      return MixpanelModule.createAsyncOptionsProvider(options);
     }
 
     return [
-      ...this.createAsyncOptionsProvider(options),
+      ...MixpanelModule.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
         useClass: options.useClass,
@@ -44,7 +54,9 @@ export class MixpanelModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: MixpanelModuleAsyncOptions): Provider[] {
+  private static createAsyncOptionsProvider(
+    options: MixpanelModuleAsyncOptions,
+  ): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -54,11 +66,19 @@ export class MixpanelModule {
         },
       ];
     }
+
+    const injectToken = options.useExisting ?? options.useClass;
+
+    if (!injectToken) {
+      return [];
+    }
+
     return [
       {
         provide: MIXPANEL_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: MixpanelOptionsFactory) => await optionsFactory.createMixpanelOptions(),
-        inject: [options.useExisting || options.useClass],
+        useFactory: async (optionsFactory: MixpanelOptionsFactory) =>
+          await optionsFactory.createMixpanelOptions(),
+        inject: [injectToken],
       },
     ];
   }

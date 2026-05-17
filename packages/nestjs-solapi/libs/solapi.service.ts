@@ -1,11 +1,14 @@
-import type { SolapiServiceOptions } from './interfaces';
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
 import { SolapiMessageService } from 'solapi';
-import { SOLAPI_SERVICE_OPTIONS } from './solapi.constants';
 import { SmsVerify } from './custom';
+import type { SolapiServiceOptions } from './interfaces';
+import { SOLAPI_SERVICE_OPTIONS } from './solapi.constants';
 
 @Injectable()
-export class SolapiService extends SolapiMessageService implements OnModuleInit {
+export class SolapiService
+  extends SolapiMessageService
+  implements OnModuleInit
+{
   public CustomSolapi: {
     SmsVerify: SmsVerify;
   };
@@ -13,7 +16,10 @@ export class SolapiService extends SolapiMessageService implements OnModuleInit 
   private solapiKey: string | null;
   private solapiSecret: string | null;
 
-  constructor(@Inject(SOLAPI_SERVICE_OPTIONS) private readonly options: SolapiServiceOptions) {
+  constructor(
+    @Inject(SOLAPI_SERVICE_OPTIONS)
+    private readonly options: SolapiServiceOptions,
+  ) {
     super(options.solapiOptions.apiKey, options.solapiOptions.apiSecret);
 
     this.solapiKey = this.options.solapiOptions.apiKey;

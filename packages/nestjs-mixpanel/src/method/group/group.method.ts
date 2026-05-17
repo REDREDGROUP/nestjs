@@ -1,14 +1,67 @@
-import mixpanel from 'mixpanel';
-import { SetGroupParams, UnsetGroupParams, SetOnceGroupParams, UnionGroupParams, RemoveGroupParams, DeleteGroupParams } from './group.type';
+import type mixpanel from 'mixpanel';
+import type {
+  DeleteGroupParams,
+  RemoveGroupParams,
+  SetGroupParams,
+  SetOnceGroupParams,
+  UnionGroupParams,
+  UnsetGroupParams,
+} from './group.type';
 
 export class MixpanelGroupMethods {
   constructor(private mixpanel: mixpanel.Mixpanel) {}
 
+  private static isDefined<T>(value: T | undefined): value is T {
+    return value !== undefined;
+  }
+
   setGroup(params: SetGroupParams) {
     if ('propertyName' in params) {
-      this.mixpanel.groups.set(params.groupKey, params.groupId, params.propertyName, params.value, params.modifiers, params.callback);
+      if (MixpanelGroupMethods.isDefined(params.modifiers)) {
+        if (MixpanelGroupMethods.isDefined(params.callback)) {
+          this.mixpanel.groups.set(
+            params.groupKey,
+            params.groupId,
+            params.propertyName,
+            params.value,
+            params.modifiers,
+            params.callback,
+          );
+        } else {
+          this.mixpanel.groups.set(
+            params.groupKey,
+            params.groupId,
+            params.propertyName,
+            params.value,
+            params.modifiers,
+          );
+        }
+      } else {
+        this.mixpanel.groups.set(
+          params.groupKey,
+          params.groupId,
+          params.propertyName,
+          params.value,
+          params.callback,
+        );
+      }
     } else {
-      this.mixpanel.groups.set(params.groupKey, params.groupId, params.properties, params.modifiers, params.callback);
+      if (MixpanelGroupMethods.isDefined(params.modifiers)) {
+        this.mixpanel.groups.set(
+          params.groupKey,
+          params.groupId,
+          params.properties,
+          params.modifiers,
+          params.callback,
+        );
+      } else {
+        this.mixpanel.groups.set(
+          params.groupKey,
+          params.groupId,
+          params.properties,
+          params.callback,
+        );
+      }
     }
   }
 
@@ -17,7 +70,13 @@ export class MixpanelGroupMethods {
   }
 
   unsetGroup(params: UnsetGroupParams) {
-    this.mixpanel.groups.unset(params.groupKey, params.groupId, params.propertyName, params.modifiers, params.callback);
+    this.mixpanel.groups.unset(
+      params.groupKey,
+      params.groupId,
+      params.propertyName,
+      params.modifiers,
+      params.callback,
+    );
   }
 
   unsetGroupMany(params: UnsetGroupParams[]) {
@@ -26,9 +85,41 @@ export class MixpanelGroupMethods {
 
   setOnceGroup(params: SetOnceGroupParams) {
     if ('propertyName' in params) {
-      this.mixpanel.groups.set_once(params.groupKey, params.groupId, params.propertyName, params.value, params.modifiers, params.callback);
+      if (MixpanelGroupMethods.isDefined(params.modifiers)) {
+        this.mixpanel.groups.set_once(
+          params.groupKey,
+          params.groupId,
+          params.propertyName,
+          params.value,
+          params.modifiers,
+          params.callback,
+        );
+      } else {
+        this.mixpanel.groups.set_once(
+          params.groupKey,
+          params.groupId,
+          params.propertyName,
+          params.value,
+          params.callback,
+        );
+      }
     } else {
-      this.mixpanel.groups.set_once(params.groupKey, params.groupId, params.properties, params.modifiers, params.callback);
+      if (MixpanelGroupMethods.isDefined(params.modifiers)) {
+        this.mixpanel.groups.set_once(
+          params.groupKey,
+          params.groupId,
+          params.properties,
+          params.modifiers,
+          params.callback,
+        );
+      } else {
+        this.mixpanel.groups.set_once(
+          params.groupKey,
+          params.groupId,
+          params.properties,
+          params.callback,
+        );
+      }
     }
   }
 
@@ -37,7 +128,13 @@ export class MixpanelGroupMethods {
   }
 
   unionGroup(params: UnionGroupParams) {
-    this.mixpanel.groups.union(params.groupKey, params.groupId, params.data, params.modifiers, params.callback);
+    this.mixpanel.groups.union(
+      params.groupKey,
+      params.groupId,
+      params.data,
+      params.modifiers,
+      params.callback,
+    );
   }
 
   unionGroupMany(params: UnionGroupParams[]) {
@@ -45,7 +142,13 @@ export class MixpanelGroupMethods {
   }
 
   removeGroup(params: RemoveGroupParams) {
-    this.mixpanel.groups.remove(params.groupKey, params.groupId, params.data, params.modifiers, params.callback);
+    this.mixpanel.groups.remove(
+      params.groupKey,
+      params.groupId,
+      params.data,
+      params.modifiers,
+      params.callback,
+    );
   }
 
   removeGroupMany(params: RemoveGroupParams[]) {
@@ -53,7 +156,12 @@ export class MixpanelGroupMethods {
   }
 
   deleteGroup(params: DeleteGroupParams) {
-    this.mixpanel.groups.delete_group(params.groupKey, params.groupId, params.modifiers, params.callback);
+    this.mixpanel.groups.delete_group(
+      params.groupKey,
+      params.groupId,
+      params.modifiers,
+      params.callback,
+    );
   }
 
   deleteGroupMany(params: DeleteGroupParams[]) {

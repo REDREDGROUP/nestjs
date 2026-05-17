@@ -1,8 +1,11 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
-
-import { FirebaseAdminModuleAsyncOptions, FirebaseAdminModuleOptions, FirebaseAdminOptionsFactory } from './interfaces';
+import { type DynamicModule, Module, type Provider } from '@nestjs/common';
 import { FIREBASE_ADMIN_SERVICE_OPTIONS } from './firebase-admin.constants';
 import { FirebaseAdminService } from './firebase-admin.service';
+import type {
+  FirebaseAdminModuleAsyncOptions,
+  FirebaseAdminModuleOptions,
+  FirebaseAdminOptionsFactory,
+} from './interfaces';
 
 @Module({
   providers: [FirebaseAdminService],
@@ -27,17 +30,23 @@ export class FirebaseAdminModule {
       global: options.isGlobal,
       module: FirebaseAdminModule,
       imports: options.imports || [],
-      providers: this.createAsyncProviders(options),
+      providers: FirebaseAdminModule.createAsyncProviders(options),
     };
   }
 
-  private static createAsyncProviders(options: FirebaseAdminModuleAsyncOptions): Provider[] {
+  private static createAsyncProviders(
+    options: FirebaseAdminModuleAsyncOptions,
+  ): Provider[] {
     if (options.useExisting || options.useFactory) {
-      return this.createAsyncOptionsProvider(options);
+      return FirebaseAdminModule.createAsyncOptionsProvider(options);
+    }
+
+    if (!options.useClass) {
+      return FirebaseAdminModule.createAsyncOptionsProvider(options);
     }
 
     return [
-      ...this.createAsyncOptionsProvider(options),
+      ...FirebaseAdminModule.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
         useClass: options.useClass,
@@ -45,7 +54,9 @@ export class FirebaseAdminModule {
     ];
   }
 
-  private static createAsyncOptionsProvider(options: FirebaseAdminModuleAsyncOptions): Provider[] {
+  private static createAsyncOptionsProvider(
+    options: FirebaseAdminModuleAsyncOptions,
+  ): Provider[] {
     if (options.useFactory) {
       return [
         {
@@ -55,11 +66,19 @@ export class FirebaseAdminModule {
         },
       ];
     }
+
+    const injectToken = options.useExisting ?? options.useClass;
+
+    if (!injectToken) {
+      return [];
+    }
+
     return [
       {
         provide: FIREBASE_ADMIN_SERVICE_OPTIONS,
-        useFactory: async (optionsFactory: FirebaseAdminOptionsFactory) => await optionsFactory.createFirebaseAdminOptions(),
-        inject: [options.useExisting || options.useClass],
+        useFactory: async (optionsFactory: FirebaseAdminOptionsFactory) =>
+          await optionsFactory.createFirebaseAdminOptions(),
+        inject: [injectToken],
       },
     ];
   }

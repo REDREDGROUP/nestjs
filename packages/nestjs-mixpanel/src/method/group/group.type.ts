@@ -1,8 +1,21 @@
-import mixpanel from 'mixpanel';
+import type mixpanel from 'mixpanel';
 
 export type SetGroupParams =
-  | { groupKey: string; groupId: string; properties: mixpanel.PropertyDict; modifiers?: mixpanel.Modifiers; callback?: mixpanel.Callback }
-  | { groupKey: string; groupId: string; propertyName: string; value: string | number; modifiers?: mixpanel.Modifiers; callback?: mixpanel.Callback };
+  | {
+      groupKey: string;
+      groupId: string;
+      properties: mixpanel.PropertyDict;
+      modifiers?: mixpanel.Modifiers;
+      callback?: mixpanel.Callback;
+    }
+  | {
+      groupKey: string;
+      groupId: string;
+      propertyName: string;
+      value: string | number;
+      modifiers?: mixpanel.Modifiers;
+      callback?: mixpanel.Callback;
+    };
 
 export type UnsetGroupParams = {
   groupKey: string;
@@ -13,8 +26,21 @@ export type UnsetGroupParams = {
 };
 
 export type SetOnceGroupParams =
-  | { groupKey: string; groupId: string; properties: mixpanel.PropertyDict; modifiers?: mixpanel.Modifiers; callback?: mixpanel.Callback }
-  | { groupKey: string; groupId: string; propertyName: string; value: string; modifiers?: mixpanel.Modifiers; callback?: mixpanel.Callback };
+  | {
+      groupKey: string;
+      groupId: string;
+      properties: mixpanel.PropertyDict;
+      modifiers?: mixpanel.Modifiers;
+      callback?: mixpanel.Callback;
+    }
+  | {
+      groupKey: string;
+      groupId: string;
+      propertyName: string;
+      value: string;
+      modifiers?: mixpanel.Modifiers;
+      callback?: mixpanel.Callback;
+    };
 
 export type UnionGroupParams = {
   groupKey: string;
@@ -32,4 +58,9 @@ export type RemoveGroupParams = {
   callback?: mixpanel.Callback;
 };
 
-export type DeleteGroupParams = { groupKey: string; groupId: string; modifiers?: mixpanel.Modifiers; callback?: mixpanel.Callback };
+export type DeleteGroupParams = {
+  groupKey: string;
+  groupId: string;
+  modifiers?: mixpanel.Modifiers;
+  callback?: mixpanel.Callback;
+};

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { OpenAIService } from '@redredgroup/nestjs-openai';
-import { ChatCompletion } from 'openai/resources';
+import type { OpenAIService } from '@redredgroup/nestjs-openai';
+import type { ChatCompletion } from 'openai/resources';
 
 @Injectable()
 export class AppService {

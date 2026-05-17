@@ -1,13 +1,16 @@
+import type { FirebaseApp } from '@firebase/app-types';
 import { Injectable } from '@nestjs/common';
-import * as admin from 'firebase-admin';
-import { FirebaseApp } from '@firebase/app-types';
+import type * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseDatabaseService implements admin.database.Database {
   app: FirebaseApp;
-  constructor(public readonly _app: admin.app.App) {}
 
-  get database() {
+  constructor(public readonly _app: admin.app.App) {
+    this.app = _app as unknown as FirebaseApp;
+  }
+
+  get database(): admin.database.Database {
     return this._app.database();
   }
 

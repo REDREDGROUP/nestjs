@@ -7,11 +7,12 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2020",
+    "types": ["node"],
+    "ignoreDeprecations": "6.0",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": false
   },
-  "include": ["libs", "tsup.config.ts"],
+  "include": ["libs"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

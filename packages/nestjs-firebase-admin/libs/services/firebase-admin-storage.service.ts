@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import type * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseStorageService {
   constructor(public readonly app: admin.app.App) {}
 
-  get storage() {
+  get storage(): admin.storage.Storage {
     return this.app.storage();
   }
 

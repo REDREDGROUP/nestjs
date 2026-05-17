@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { ChatCompletion } from 'openai/resources/chat';
+import type { ChatCompletion } from 'openai/resources/chat';
+import type { AppService } from './app.service';
 
 @Controller()
 export class AppController {

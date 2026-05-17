@@ -1,5 +1,5 @@
-import mixpanel from 'mixpanel';
-import { AliasParams } from './alias.type';
+import type mixpanel from 'mixpanel';
+import type { AliasParams } from './alias.type';
 
 export class MixpanelAliasMethods {
   constructor(private mixpanel: mixpanel.Mixpanel) {}

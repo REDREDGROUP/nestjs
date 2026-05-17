@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SolapiService } from '@redredgroup/nestjs-solapi';
+import type { SolapiService } from '@redredgroup/nestjs-solapi';
 
 @Injectable()
 export class AppService {

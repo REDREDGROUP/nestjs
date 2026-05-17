@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { MixpanelService, TrackParams } from '@redredgroup/nestjs-mixpanel';
+import type {
+  MixpanelService,
+  TrackParams,
+} from '@redredgroup/nestjs-mixpanel';
 
 @Injectable()
 export class AppService {

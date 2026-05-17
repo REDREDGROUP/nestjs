@@ -27,7 +27,7 @@
     "build:watch": "tsup-node --watch",
     "format": "turbo run format",
     "lint": "turbo run lint",
-    "lint:format": "prettier --check .",
+    "lint:format": "pnpm exec biome check .",
     "syncpack:fix": "syncpack fix-mismatches --config ./.syncpackrc.js",
     "syncpack:format": "syncpack format --config ./.syncpackrc.js",
     "syncpack:lint": "syncpack lint --config ./.syncpackrc.js",
@@ -37,21 +37,21 @@
     "type-check": "turbo run type-check"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "@types/node": "22.10.7",
-    "@changesets/cli": "2.26.2",
-    "@commitlint/cli": "18.2.0",
-    "@commitlint/config-conventional": "18.1.0",
-    "commitizen": "4.3.0",
+    "@biomejs/biome": "2.3.13",
+    "@changesets/cli": "2.31.0",
+    "@commitlint/cli": "21.0.1",
+    "@commitlint/config-conventional": "21.0.1",
+    "@types/node": "25.8.0",
+    "commitizen": "4.3.1",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "8.0.3",
-    "lint-staged": "14.0.1",
-    "prettier": "3.0.3",
-    "syncpack": "11.2.1",
-    "turbo": "2.5.8"
+    "husky": "9.1.7",
+    "lint-staged": "17.0.5",
+    "syncpack": "15.1.2",
+    "turbo": "2.9.14",
+    "typescript": "6.0.3"
   },
   "engines": {
-    "node": "22.19.0"
+    "node": "24.13.0"
   },
   "packageManager": "pnpm@10.11.1",
   "config": {

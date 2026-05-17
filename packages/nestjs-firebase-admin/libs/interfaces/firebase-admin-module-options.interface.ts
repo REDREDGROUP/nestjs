@@ -1,5 +1,5 @@
-import { ModuleMetadata, Type } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import type { ModuleMetadata, Type } from '@nestjs/common';
+import type * as admin from 'firebase-admin';
 
 export interface FirebaseAdminModuleOptions {
   isGlobal?: boolean;
@@ -14,13 +14,18 @@ export interface FirebaseAdminServiceOptions {
 export interface FirebaseAdminOptions extends admin.AppOptions {}
 
 export interface FirebaseAdminOptionsFactory {
-  createFirebaseAdminOptions(): Promise<FirebaseAdminServiceOptions> | FirebaseAdminServiceOptions;
+  createFirebaseAdminOptions():
+    | Promise<FirebaseAdminServiceOptions>
+    | FirebaseAdminServiceOptions;
 }
 
-export interface FirebaseAdminModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface FirebaseAdminModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   isGlobal?: boolean;
   useExisting?: Type<FirebaseAdminOptionsFactory>;
   useClass?: Type<FirebaseAdminOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<FirebaseAdminServiceOptions> | FirebaseAdminServiceOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<FirebaseAdminServiceOptions> | FirebaseAdminServiceOptions;
   inject?: any[];
 }
